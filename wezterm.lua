@@ -3,19 +3,24 @@
 -- Action is to perform actions on the terminal
 local wezterm = require("wezterm")
 
+-- Check the operating system
+local is_macos = wezterm.target_triple == "x86_64-apple-darwin" or wezterm.target_triple == "aarch64-apple-darwin"
+
 if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
 local act = wezterm.action
 
-config.disable_default_key_bindings = true
-config.keys = {
-	-- paste from the clipboard
-	{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
-	-- paste from the primary selection
-	{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
-}
+if not is_macos then
+	config.disable_default_key_bindings = true
+	config.keys = {
+		-- paste from the clipboard
+		{ key = "V", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+		-- paste from the primary selection
+		{ key = "V", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
+	}
+end
 
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 
@@ -26,8 +31,14 @@ config.color_scheme = "Tokyo Night"
 -- This is my chosen font, we will get into installing fonts on windows later
 config.font = wezterm.font("MonoLisa Nerd Font Mono")
 config.harfbuzz_features = { "zero", "ss02", "ss03", "ss08", "ss11", "ss12", "ss13", "ss14", "ss18" }
-config.font_size = 13
-config.line_height = 1.3
+
+if is_macos then
+	config.font_size = 18
+	config.line_height = 1.2
+else
+	config.font_size = 13
+	config.line_height = 1.3
+end
 
 config.default_cursor_style = "SteadyBlock"
 
@@ -116,13 +127,13 @@ mouse_bindings = {
 
 -- -- This is used to make my foreground (text, etc) brighter than my background
 -- config.foreground_text_hsb = {
--- 	hue = 1.0,
--- 	saturation = 1.2,
--- 	brightness = 1.5,
+--	hue = 1.0,
+--	saturation = 1.2,
+--	brightness = 1.5,
 -- }
 
 -- IMPORTANT: Sets WSL2 UBUNTU-22.04 as the defualt when opening Wezterm
-if os.getenv("HOME") ~= "/Users" then
+if not is_macos then
 	config.default_domain = "WSL:Ubuntu-22.04"
 end
 
