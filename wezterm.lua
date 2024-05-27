@@ -2,39 +2,35 @@
 -- Mux is the mutliplexes for windows etc inside of the terminal
 -- Action is to perform actions on the terminal
 local wezterm = require("wezterm")
-local act = wezterm.action
 
--- These are vars to put things in later (i dont use em all yet)
-local config = {}
-local keys = {}
-local mouse_bindings = {}
-local launch_menu = {}
-
-local config_dir = "C:/Users/agulyas/.config/wezterm"
-
--- This is for newer wezterm vertions to use the config builder
 if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
--- Default config settings
--- These are the default config settins needed to use Wezterm
--- Just add this and return config and that's all the basics you need
+local act = wezterm.action
+
+config.disable_default_key_bindings = true
+config.keys = {
+	-- paste from the clipboard
+	{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+	-- paste from the primary selection
+	{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
+}
+
+config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 
 -- Color scheme, Wezterm has 100s of them you can see here:
 -- https://wezfurlong.org/wezterm/colorschemes/index.html
 config.color_scheme = "Tokyo Night"
+
 -- This is my chosen font, we will get into installing fonts on windows later
 config.font = wezterm.font("MonoLisa Nerd Font Mono")
-config.font_size = 14
-config.line_height = 1.2
-config.launch_menu = launch_menu
--- makes my cursor blink
+config.harfbuzz_features = { "zero", "ss02", "ss03", "ss08", "ss11", "ss12", "ss13", "ss14", "ss18" }
+config.font_size = 13
+config.line_height = 1.3
+
 config.default_cursor_style = "SteadyBlock"
--- config.disable_default_key_bindings = true
--- this adds the ability to use ctrl+v to paste the system clipboard
--- config.keys = { { key = "V", mods = "CTRL", action = act.PasteFrom("Clipboard") } }
-config.mouse_bindings = mouse_bindings
+
 config.hide_tab_bar_if_only_one_tab = true
 
 -- Disable the default fancy tab bar, and use the simpler one
