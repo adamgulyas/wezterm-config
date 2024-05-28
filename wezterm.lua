@@ -3,31 +3,32 @@
 -- Action is to perform actions on the terminal
 local wezterm = require("wezterm")
 local act = wezterm.action
+local mouse_bindings = {}
 
 -- Check the operating system
 local is_macos = wezterm.target_triple == "x86_64-apple-darwin" or wezterm.target_triple == "aarch64-apple-darwin"
 
+local config = {}
+local keys = {}
+local mouse_bindings = {}
+local launch_menu = {}
+
+-- This is for newer wezterm versions to use the config builder
 if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
-if not is_macos then
-	config.disable_default_key_bindings = true
-	config.keys = {
-		-- paste from the clipboard
-		{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
-		-- paste from the primary selection
-		{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
-	}
-end
+-- if not is_macos then
+-- 	config.disable_default_key_bindings = true
+-- 	config.keys = {
+-- 		-- paste from the clipboard
+-- 		{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+-- 		-- paste from the primary selection
+-- 		{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
+-- 	}
+-- end
 
-config.disable_default_key_bindings = true
-config.keys = {
-	-- paste from the clipboard
-	{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
-	-- paste from the primary selection
-	{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
-}
+config.mouse_bindings = mouse_bindings
 
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 
