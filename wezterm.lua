@@ -2,23 +2,23 @@
 -- Mux is the mutliplexes for windows etc inside of the terminal
 -- Action is to perform actions on the terminal
 local wezterm = require("wezterm")
+local act = wezterm.action
 
 -- Check the operating system
 local is_macos = wezterm.target_triple == "x86_64-apple-darwin" or wezterm.target_triple == "aarch64-apple-darwin"
 
+-- This is for newer wezterm vertions to use the config builder
 if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
-
-local act = wezterm.action
 
 if not is_macos then
 	config.disable_default_key_bindings = true
 	config.keys = {
 		-- paste from the clipboard
-		{ key = "V", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+		{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
 		-- paste from the primary selection
-		{ key = "V", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
+		{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
 	}
 end
 
@@ -124,13 +124,6 @@ mouse_bindings = {
 		end),
 	},
 }
-
--- -- This is used to make my foreground (text, etc) brighter than my background
--- config.foreground_text_hsb = {
---	hue = 1.0,
---	saturation = 1.2,
---	brightness = 1.5,
--- }
 
 -- IMPORTANT: Sets WSL2 UBUNTU-22.04 as the defualt when opening Wezterm
 if not is_macos then
