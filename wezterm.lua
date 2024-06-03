@@ -18,15 +18,15 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
--- if not is_macos then
--- 	config.disable_default_key_bindings = true
--- 	config.keys = {
--- 		-- paste from the clipboard
--- 		{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
--- 		-- paste from the primary selection
--- 		{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
--- 	}
--- end
+if not is_macos then
+	-- config.disable_default_key_bindings = true
+	config.keys = {
+		-- paste from the clipboard
+		{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+		-- paste from the primary selection
+		{ key = "v", mods = "CTRL", action = act.PasteFrom("PrimarySelection") },
+	}
+end
 
 config.mouse_bindings = mouse_bindings
 
