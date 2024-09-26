@@ -34,7 +34,7 @@ config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 
 -- Color scheme, Wezterm has 100s of them you can see here:
 -- https://wezfurlong.org/wezterm/colorschemes/index.html
-config.color_scheme = "Tokyo Night"
+config.color_scheme = "tokyonight_night"
 
 -- This is my chosen font, we will get into installing fonts on windows later
 config.font = wezterm.font("MonoLisa Nerd Font Mono")
